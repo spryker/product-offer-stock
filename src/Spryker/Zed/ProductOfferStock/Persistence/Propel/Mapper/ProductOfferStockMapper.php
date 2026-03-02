@@ -35,12 +35,6 @@ class ProductOfferStockMapper
         return $productOfferStockTransfers;
     }
 
-    /**
-     * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function mapProductOfferStockEntityToProductOfferStockTransfer(
         SpyProductOfferStock $productOfferStockEntity,
         ProductOfferStockTransfer $productOfferStockTransfer
@@ -55,12 +49,6 @@ class ProductOfferStockMapper
         return $productOfferStockTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity
-     *
-     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock
-     */
     public function mapProductOfferStockTransferToProductOfferStockEntity(
         ProductOfferStockTransfer $productOfferStockTransfer,
         SpyProductOfferStock $productOfferStockEntity
@@ -81,12 +69,6 @@ class ProductOfferStockMapper
         return $productOfferStockEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockTransfer
-     */
     protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
     {
         return $stockTransfer->fromArray($stockEntity->toArray(), true);

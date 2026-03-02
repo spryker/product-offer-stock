@@ -16,11 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ProductOfferStockEntityManager extends AbstractEntityManager implements ProductOfferStockEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function create(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer
     {
         $productOfferStockMapper = $this->getFactory()
@@ -35,11 +30,6 @@ class ProductOfferStockEntityManager extends AbstractEntityManager implements Pr
             ->mapProductOfferStockEntityToProductOfferStockTransfer($productOfferStockEntity, $productOfferStockTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function update(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer
     {
         $productOfferStockTransfer->requireIdProductOfferStock();

@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
 interface ProductOfferStockRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
-     */
     public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer;
 
     /**

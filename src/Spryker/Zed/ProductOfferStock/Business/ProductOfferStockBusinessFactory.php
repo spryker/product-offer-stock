@@ -23,9 +23,6 @@ use Spryker\Zed\ProductOfferStock\ProductOfferStockDependencyProvider;
  */
 class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface
-     */
     public function createProductOfferStockReader(): ProductOfferStockReaderInterface
     {
         return new ProductOfferStockReader(
@@ -35,17 +32,11 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface
-     */
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
         return new ProductOfferExpander($this->getRepository());
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface
-     */
     public function createProductOfferStockResultMapper(): ProductOfferStockResultMapperInterface
     {
         return new ProductOfferStockResultMapper();

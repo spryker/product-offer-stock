@@ -19,11 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductOfferStockRepository extends AbstractRepository implements ProductOfferStockRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
-     */
     public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer
     {
         $productOfferStockQuery = $this->getFactory()

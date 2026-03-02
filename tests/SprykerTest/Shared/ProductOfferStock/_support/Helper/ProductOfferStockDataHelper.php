@@ -77,9 +77,6 @@ class ProductOfferStockDataHelper extends Module
         return $productOfferStockTransfer;
     }
 
-    /**
-     * @return \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
-     */
     protected function getProductOfferHelper(): ProductOfferHelper
     {
         /** @var \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper $productOfferHelper */
@@ -88,9 +85,6 @@ class ProductOfferStockDataHelper extends Module
         return $productOfferHelper;
     }
 
-    /**
-     * @return \SprykerTest\Shared\Stock\Helper\StockDataHelper
-     */
     protected function getStockDataHelper(): StockDataHelper
     {
         /** @var \SprykerTest\Shared\Stock\Helper\StockDataHelper $stockDataHelper */

@@ -36,9 +36,6 @@ class ProductOfferStockBusinessTester extends Actor
 {
     use _generated\ProductOfferStockBusinessTesterActions;
 
-    /**
-     * @return void
-     */
     public function ensureProductOfferStockTableIsEmpty(): void
     {
         $query = $this->getProductOfferStockQuery();
@@ -46,28 +43,16 @@ class ProductOfferStockBusinessTester extends Actor
         $query->deleteAll();
     }
 
-    /**
-     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
-     */
     public function getProductOfferStockQuery(): SpyProductOfferStockQuery
     {
         return SpyProductOfferStockQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface
-     */
     public function getProductOfferStockRepository(): ProductOfferStockRepositoryInterface
     {
         return new ProductOfferStockRepository();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function haveProductOfferStockWithProductOfferAndStoreAttached(
         ProductOfferTransfer $productOfferTransfer,
         StoreTransfer $storeTransfer

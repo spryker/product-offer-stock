@@ -11,17 +11,7 @@ use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
 interface ProductOfferStockEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function create(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
-     */
     public function update(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer;
 }

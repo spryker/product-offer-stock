@@ -38,9 +38,6 @@ class ProductOfferStockFacadeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -48,9 +45,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->tester->ensureProductOfferStockTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -60,9 +54,6 @@ class ProductOfferStockFacadeTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStockResultSetIsNeverOutOfStockIfAtLeastOneProductOfferStockIsNeverOutOfStock(): void
     {
         // Arrange
@@ -98,9 +89,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertTrue($response);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStockResultReturnsSummarizedStockQuantity(): void
     {
         // Arrange
@@ -146,9 +134,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertSame($expectedResult, $productOfferStockTransfer->toInt());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStockResultShouldReturnQuantityOfZeroIfStockIsInactive(): void
     {
         // Arrange
@@ -180,9 +165,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertSame(0, $productOfferStockTransfer->toInt());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStockResultReturnsZeroQuantityIfProductOfferNotExists(): void
     {
         // Arrange
@@ -201,9 +183,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertSame(0, $productOfferStockTransfer->getQuantity()->toInt());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStocksReturnsCorrectAmountOfStocks(): void
     {
         // Arrange
@@ -235,9 +214,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertSame($stocksAmount, $productOfferStockTransfers->count());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductOfferStocksThrowsExceptionIfProductOfferNotExists(): void
     {
         // Arrange
@@ -254,9 +230,6 @@ class ProductOfferStockFacadeTest extends Unit
             ->getProductOfferStocks($productOfferStockRequestTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testFindProductOfferStocksReturnsCorrectAmountOfStocks(): void
     {
         // Arrange
@@ -292,9 +265,6 @@ class ProductOfferStockFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testFindProductOfferStocksReturnsNullIfProductOfferNotExists(): void
     {
         // Arrange
@@ -314,9 +284,6 @@ class ProductOfferStockFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testCreatePersistsNewEntityToDatabase(): void
     {
         // Arrange
@@ -339,9 +306,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateUpdatesProductOfferStock(): void
     {
         // Arrange
@@ -367,9 +331,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandProductOfferWithProductOfferStockCollectionExpandsProductOffer(): void
     {
         $productOfferTransfer = $this->tester->haveProductOffer();
@@ -391,9 +352,6 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertEquals($productOfferStockTransfers->offsetGet(0)->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
     }
 
-    /**
-     * @return void
-     */
     public function testStockTransferIsExpandedWithStockAddressWhenStockEntityToStockMapperIsCalled(): void
     {
         // Arrange

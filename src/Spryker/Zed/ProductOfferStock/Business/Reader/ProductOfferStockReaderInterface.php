@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 
 interface ProductOfferStockReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
-     */
     public function getProductOfferStockResult(
         ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
     ): ProductOfferStockResultTransfer;

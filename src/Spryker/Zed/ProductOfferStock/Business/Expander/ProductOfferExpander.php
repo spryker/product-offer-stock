@@ -18,19 +18,11 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      */
     protected $productOfferStockRepository;
 
-    /**
-     * @param \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface $productOfferStockRepository
-     */
     public function __construct(ProductOfferStockRepositoryInterface $productOfferStockRepository)
     {
         $this->productOfferStockRepository = $productOfferStockRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
     public function expandProductOfferWithProductOfferStockCollection(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         $productOfferTransfer->requireProductOfferReference();

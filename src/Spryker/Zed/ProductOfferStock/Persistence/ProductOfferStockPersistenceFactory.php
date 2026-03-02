@@ -18,17 +18,11 @@ use Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMap
  */
 class ProductOfferStockPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMapper
-     */
     public function createProductOfferStockMapper(): ProductOfferStockMapper
     {
         return new ProductOfferStockMapper();
     }
 
-    /**
-     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
-     */
     public function getProductOfferStockPropelQuery(): SpyProductOfferStockQuery
     {
         return SpyProductOfferStockQuery::create();

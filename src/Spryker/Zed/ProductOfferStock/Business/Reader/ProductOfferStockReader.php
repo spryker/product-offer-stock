@@ -47,11 +47,6 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         $this->stockTransferProductOfferStockExpanderPlugins = $stockTransferProductOfferStockExpanderPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
-     */
     public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer
     {
         $productOfferStockRequestTransfer
@@ -122,11 +117,6 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         return $productOfferStockTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockTransfer
-     */
     protected function executeStockTransferExpanderPlugins(StockTransfer $stockTransfer): StockTransfer
     {
         foreach ($this->stockTransferProductOfferStockExpanderPlugins as $expanderPlugin) {

@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
     public function expandProductOfferWithProductOfferStockCollection(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }
