@@ -17,6 +17,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductOfferStockMapper
 {
     /**
+     * @var array<int, \Generated\Shared\Transfer\StockTransfer>
+     */
+    protected static array $stockCache = [];
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock> $productOfferStockEntities
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
@@ -42,9 +47,7 @@ class ProductOfferStockMapper
         $productOfferStockTransfer->fromArray($productOfferStockEntity->toArray(), true);
         $productOfferStockTransfer->setIdProductOffer($productOfferStockEntity->getFkProductOffer());
         $productOfferStockTransfer->setProductOfferReference($productOfferStockEntity->getSpyProductOffer()->getProductOfferReference());
-        $productOfferStockTransfer->setStock(
-            $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer()),
-        );
+        $productOfferStockTransfer->setStock($this->getStockTransfer($productOfferStockEntity));
 
         return $productOfferStockTransfer;
     }
@@ -72,5 +75,14 @@ class ProductOfferStockMapper
     protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
     {
         return $stockTransfer->fromArray($stockEntity->toArray(), true);
+    }
+
+    protected function getStockTransfer(SpyProductOfferStock $productOfferStockEntity): StockTransfer
+    {
+        if (!isset(static::$stockCache[$productOfferStockEntity->getFkStock()])) {
+            static::$stockCache[$productOfferStockEntity->getFkStock()] = $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer());
+        }
+
+        return static::$stockCache[$productOfferStockEntity->getFkStock()];
     }
 }

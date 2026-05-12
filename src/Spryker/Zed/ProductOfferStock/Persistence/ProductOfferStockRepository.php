@@ -52,7 +52,9 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         $productOfferStockEntities = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
             $productOfferStockRequestTransfer,
-        )->find();
+        )
+            ->joinWithSpyProductOffer()
+            ->find();
 
         return $this->getFactory()
             ->createProductOfferStockMapper()
