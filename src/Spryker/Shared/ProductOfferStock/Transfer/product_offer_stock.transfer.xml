@@ -6,6 +6,7 @@
         <property name="store" type="Store"/>
         <property name="isStockActive" type="bool" strict="true"/>
         <property name="orderByLargestStock" type="bool" strict="true"/>
+        <property name="withStores" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="ProductOfferStock">
@@ -58,6 +59,12 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="productOfferReference" type="string"/>
+        <property name="stores" type="Store[]" singular="store"/>
+        <property name="amountSku" type="string"/>
     </transfer>
 
 </transfers>

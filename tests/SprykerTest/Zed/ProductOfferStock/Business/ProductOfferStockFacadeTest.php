@@ -375,4 +375,84 @@ class ProductOfferStockFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->findProductOfferStocks($productOfferStockRequestTransfer);
     }
+
+    public function testFindProductOfferStocksWithStoresHydratesStoreRelationOnStock(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
+        ]);
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
+        ]);
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setStore($storeTransfer)
+            ->setWithStores(true);
+
+        // Act
+        $productOfferStockTransfers = $this->tester->getFacade()
+            ->findProductOfferStocks($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($productOfferStockTransfers);
+        $this->assertGreaterThan(0, $productOfferStockTransfers->count(), 'Expected at least one product offer stock.');
+        /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
+        $productOfferStockTransfer = $productOfferStockTransfers->getIterator()->current();
+        $storeRelationTransfer = $productOfferStockTransfer->getStockOrFail()->getStoreRelation();
+        $this->assertNotNull($storeRelationTransfer, 'Expected Stock.storeRelation to be populated when withStores=true.');
+        $this->assertGreaterThan(0, $storeRelationTransfer->getStores()->count(), 'Expected at least one store on the hydrated storeRelation.');
+        $this->assertSame(
+            $storeTransfer->getIdStore(),
+            $storeRelationTransfer->getStores()->getIterator()->current()->getIdStore(),
+        );
+    }
+
+    public function testFindProductOfferStocksWithWithStoresHydratesEveryAssignedStore(): void
+    {
+        // Arrange
+        $primaryStoreTransfer = $this->tester->haveStore();
+        $secondaryStoreTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => [
+                    $primaryStoreTransfer->getIdStore(),
+                    $secondaryStoreTransfer->getIdStore(),
+                ],
+            ],
+        ]);
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
+        ]);
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setStore($primaryStoreTransfer)
+            ->setWithStores(true);
+
+        // Act
+        $productOfferStockTransfers = $this->tester->getFacade()
+            ->findProductOfferStocks($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($productOfferStockTransfers);
+        $this->assertGreaterThan(0, $productOfferStockTransfers->count());
+        /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
+        $productOfferStockTransfer = $productOfferStockTransfers->getIterator()->current();
+        $storeRelationTransfer = $productOfferStockTransfer->getStockOrFail()->getStoreRelation();
+        $this->assertNotNull($storeRelationTransfer);
+
+        $hydratedStoreIds = [];
+        foreach ($storeRelationTransfer->getStores() as $hydratedStoreTransfer) {
+            $hydratedStoreIds[] = $hydratedStoreTransfer->getIdStore();
+        }
+        $this->assertContains($primaryStoreTransfer->getIdStore(), $hydratedStoreIds);
+        $this->assertContains($secondaryStoreTransfer->getIdStore(), $hydratedStoreIds);
+    }
 }

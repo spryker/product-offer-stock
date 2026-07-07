@@ -42,19 +42,33 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
     }
 
     /**
+     * @module Store
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock> $productOfferStockEntities */
-        $productOfferStockEntities = $this->applyFilters(
+        $productOfferStockQuery = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
             $productOfferStockRequestTransfer,
-        )
-            ->joinWithSpyProductOffer()
-            ->find();
+        );
+
+        $productOfferStockQuery->joinWithSpyProductOffer();
+
+        if ($productOfferStockRequestTransfer->getWithStores()) {
+            $productOfferStockQuery
+                ->useStockQuery()
+                    ->joinWithStockStore()
+                    ->useStockStoreQuery()
+                        ->joinWithStore()
+                    ->endUse()
+                ->endUse();
+        }
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock> $productOfferStockEntities */
+        $productOfferStockEntities = $productOfferStockQuery->find();
 
         return $this->getFactory()
             ->createProductOfferStockMapper()

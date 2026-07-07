@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -74,15 +76,46 @@ class ProductOfferStockMapper
 
     protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
     {
-        return $stockTransfer->fromArray($stockEntity->toArray(), true);
+        $stockTransfer->fromArray($stockEntity->toArray(), true);
+
+        return $this->mapStockStoresToStockTransfer($stockEntity, $stockTransfer);
+    }
+
+    protected function mapStockStoresToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
+    {
+        $stockStoreEntities = $stockEntity->getStockStores();
+        if ($stockStoreEntities->count() === 0) {
+            return $stockTransfer;
+        }
+
+        $storeRelationTransfer = new StoreRelationTransfer();
+        foreach ($stockStoreEntities as $stockStoreEntity) {
+            $storeEntity = $stockStoreEntity->getStore();
+            if ($storeEntity === null) {
+                continue;
+            }
+
+            $storeRelationTransfer->addStores(
+                (new StoreTransfer())->fromArray($storeEntity->toArray(), true),
+            );
+        }
+
+        return $stockTransfer->setStoreRelation($storeRelationTransfer);
     }
 
     protected function getStockTransfer(SpyProductOfferStock $productOfferStockEntity): StockTransfer
     {
-        if (!isset(static::$stockCache[$productOfferStockEntity->getFkStock()])) {
-            static::$stockCache[$productOfferStockEntity->getFkStock()] = $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer());
+        $idStock = $productOfferStockEntity->getFkStock();
+        if (isset(static::$stockCache[$idStock])) {
+            return static::$stockCache[$idStock];
         }
 
-        return static::$stockCache[$productOfferStockEntity->getFkStock()];
+        $stockTransfer = $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer());
+
+        if ($stockTransfer->getStoreRelation() !== null) {
+            static::$stockCache[$idStock] = $stockTransfer;
+        }
+
+        return $stockTransfer;
     }
 }

@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferStock\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\ProductOfferStock\Business\Expander\ReservationRequestExpander;
+use Spryker\Zed\ProductOfferStock\Business\Expander\ReservationRequestExpanderInterface;
 use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper;
 use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReader;
@@ -35,6 +37,11 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
         return new ProductOfferExpander($this->getRepository());
+    }
+
+    public function createReservationRequestExpander(): ReservationRequestExpanderInterface
+    {
+        return new ReservationRequestExpander($this->createProductOfferStockReader());
     }
 
     public function createProductOfferStockResultMapper(): ProductOfferStockResultMapperInterface
