@@ -25,12 +25,16 @@ class ReservationRequestExpander implements ReservationRequestExpanderInterface
             return $reservationRequestTransfer;
         }
 
-        $productOfferStockTransfers = $this->productOfferStockReader->getProductOfferStocks(
+        $productOfferStockTransfers = $this->productOfferStockReader->findProductOfferStocks(
             (new ProductOfferStockRequestTransfer())
                 ->setProductOfferReference($productOfferReference)
                 ->setStore($reservationRequestTransfer->getStoreOrFail())
                 ->setWithStores(true),
         );
+
+        if ($productOfferStockTransfers === null) {
+            return $reservationRequestTransfer;
+        }
 
         $existingStoreNames = $this->extractStoreNames($reservationRequestTransfer);
         foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
