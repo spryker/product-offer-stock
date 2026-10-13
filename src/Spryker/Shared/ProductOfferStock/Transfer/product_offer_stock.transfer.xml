@@ -41,6 +41,7 @@
 
     <transfer name="StoreRelation">
         <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="AclEntityMetadataConfig">
@@ -65,6 +66,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
         <property name="amountSku" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>
